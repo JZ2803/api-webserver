@@ -1,7 +1,7 @@
 from init import db, ma
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import ForeignKey
 from marshmallow import fields
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 class Plant(db.Model):
     __tablename__ = 'plants'

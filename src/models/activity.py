@@ -1,7 +1,8 @@
 from datetime import date
-from init import db
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from init import db, ma
+from marshmallow import fields
 from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 class Activity(db.Model):
     __tablename__ = 'activities'
@@ -14,3 +15,7 @@ class Activity(db.Model):
 
     enrolment_id: Mapped[int] = mapped_column(ForeignKey('enrolments.id'))
     enrolment: Mapped['Enrolment'] = relationship(back_populates='activities')
+
+class ActivitySchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'date_performed', 'activity_type_id', 'enrolment_id')

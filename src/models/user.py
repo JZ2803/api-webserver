@@ -1,6 +1,7 @@
-from init import db
+from init import db, ma
+from marshmallow import fields
+from sqlalchemy import Boolean, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import Text, String, Boolean
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -11,3 +12,7 @@ class User(db.Model):
     is_admin: Mapped[bool] = mapped_column(Boolean(), server_default='false')
 
     comments: Mapped['Comment'] = relationship(back_populates='user')
+
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'email', 'password', 'is_admin')
