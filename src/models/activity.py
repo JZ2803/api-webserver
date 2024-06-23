@@ -1,7 +1,7 @@
 from datetime import date
 from init import db, ma
 from marshmallow import fields
-from sqlalchemy import ForeignKey
+from sqlalchemy import Date, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 class Activity(db.Model):

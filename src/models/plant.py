@@ -1,4 +1,5 @@
 from init import db, ma
+from typing import List
 from marshmallow import fields
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -13,6 +14,8 @@ class Plant(db.Model):
 
     customer_id: Mapped[int] = mapped_column(ForeignKey('customers.id'))
     customer: Mapped['Customer'] = relationship(back_populates='plants')
+
+    enrolments: Mapped[List['Enrolment']] = relationship(back_populates='plant')
 
 class PlantSchema(ma.Schema):
     class Meta:

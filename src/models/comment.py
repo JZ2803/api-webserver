@@ -1,6 +1,7 @@
 from init import db, ma
+from datetime import date
 from marshmallow import fields
-from sqlalchemy import ForeignKey, Text
+from sqlalchemy import Date, ForeignKey, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 class Comment(db.Model):
@@ -8,12 +9,13 @@ class Comment(db.Model):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     text: Mapped[str] = mapped_column(Text())
-
-    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
-    user: Mapped['User'] = relationship(back_populates='comments')
+    date_created: Mapped[date]
 
     enrolment_id: Mapped[int] = mapped_column(ForeignKey('enrolments.id'))
     enrolment: Mapped['Enrolment'] = relationship(back_populates='comments')
+
+    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+    user: Mapped['User'] = relationship(back_populates='comments')
 
 class CommentSchema(ma.Schema):
     class Meta:

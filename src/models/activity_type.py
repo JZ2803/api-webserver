@@ -1,4 +1,5 @@
 from init import db, ma
+from typing import List
 from marshmallow import fields
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -9,7 +10,7 @@ class ActivityType(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String())
 
-    activities: Mapped['Activity'] = relationship(back_populates='activity_type')
+    activities: Mapped[List['Activity']] = relationship(back_populates='activity_type')
 
 class ActivityTypeSchema(ma.Schema):
     class Meta:

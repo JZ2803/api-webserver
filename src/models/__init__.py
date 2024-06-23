@@ -1,0 +1,9 @@
+import models.activity
+import models.activity_type
+import models.comment
+import models.customer
+import models.enrolment
+import models.plant
+import models.species
+import models.species_type
+import models.user
