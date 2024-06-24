@@ -12,8 +12,9 @@ class Customer(db.Model):
     email: Mapped[str] = mapped_column(Text())
     phone_no: Mapped[str] = mapped_column(String(10))
 
-    plants: Mapped[List['Plant']] = relationship(back_populates='customer')
+    plants: Mapped[List['Plant']] = relationship(back_populates='customer', cascade='all, delete')
 
 class CustomerSchema(ma.Schema):
     class Meta:
+        ordered = True
         fields = ('id', 'first_name', 'last_name', 'email', 'phone_no')

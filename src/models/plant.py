@@ -15,7 +15,7 @@ class Plant(db.Model):
     customer_id: Mapped[int] = mapped_column(ForeignKey('customers.id'))
     customer: Mapped['Customer'] = relationship(back_populates='plants')
 
-    enrolments: Mapped[List['Enrolment']] = relationship(back_populates='plant')
+    enrolments: Mapped[List['Enrolment']] = relationship(back_populates='plant', cascade='all, delete')
 
 class PlantSchema(ma.Schema):
     class Meta:

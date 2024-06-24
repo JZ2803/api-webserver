@@ -1,3 +1,4 @@
+from auth import admin_only
 from datetime import timedelta
 from flask import Blueprint, request
 from flask_jwt_extended import create_access_token
@@ -20,6 +21,7 @@ def login():
 
 # TO BE COMPLETED
 @users_bp.route("/create", methods=['POST'])
+@admin_only
 def create_user():
     params = UserSchema(only=['email', 'password', 'is_admin']).load(request.json)
     return params
