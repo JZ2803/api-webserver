@@ -16,4 +16,4 @@ class Customer(db.Model):
 
 class CustomerSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'first_name', 'last_name', 'email')
+        fields = ('id', 'first_name', 'last_name', 'email', 'phone_no')
