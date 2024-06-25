@@ -27,7 +27,7 @@ def create_activity_type():
 
 @activity_types_bp.route("/<int:id>", methods=['DELETE'])
 @admin_only_with_id
-def delete_customer(id):
+def delete_activity_type(id):
     """Deletes an activity type from the database."""
     activity_type = db.get_or_404(ActivityType, id)
     db.session.delete(activity_type)

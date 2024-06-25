@@ -10,7 +10,7 @@ class SpecieType(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String())
 
-    species: Mapped[List['Specie']] = relationship(back_populates='specie_type')
+    species: Mapped[List['Specie']] = relationship(back_populates='specie_type', cascade='all, delete')
 
 class SpecieTypeSchema(ma.Schema):
     class Meta:

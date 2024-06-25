@@ -3,6 +3,7 @@ from blueprints.cli_bp import db_commands
 from blueprints.customers_bp import customers_bp
 from blueprints.enrolments_bp import enrolments_bp
 from blueprints.plants_bp import plants_bp
+from blueprints.specie_types_bp import specie_types_bp
 from blueprints.users_bp import users_bp
 from init import app
 from marshmallow.exceptions import ValidationError
@@ -13,6 +14,7 @@ app.register_blueprint(customers_bp)
 app.register_blueprint(plants_bp)
 app.register_blueprint(enrolments_bp)
 app.register_blueprint(activity_types_bp)
+app.register_blueprint(specie_types_bp)
 
 print(app.url_map)
 

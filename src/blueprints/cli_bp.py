@@ -31,7 +31,7 @@ def db_seed():
             name="Cactus"
         ),
         SpecieType(
-            name="Foliage plant"
+            name="Air plant"
         ),
         SpecieType(
             name="Flowering plant"
