@@ -6,6 +6,7 @@ from models.plant import Plant, PlantSchema, PlantEnrolmentSchema
 plants_bp = Blueprint('plants', __name__, url_prefix="/plants")
 
 @plants_bp.route("/", methods=['GET'])
+@jwt_required()
 def get_all_plants():
     """Returns a list of all plant records including its specie and id of customer to whom it belongs."""
     stmt = db.select(Plant)
@@ -13,6 +14,7 @@ def get_all_plants():
     return PlantSchema(many=True).dump(plants)
 
 @plants_bp.route("/<int:id>", methods=['GET'])
+@jwt_required()
 def get_plant(id):
     """Returns a list of all enrolments associated with a plant."""
     plant = db.get_or_404(Plant, id)

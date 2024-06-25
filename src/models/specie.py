@@ -17,5 +17,6 @@ class Specie(db.Model):
 
 class SpecieSchema(ma.Schema):
     specie_type = fields.Nested('SpecieTypeSchema', only=['name'])
+    
     class Meta:
         fields = ('id', 'name', 'specie_type')

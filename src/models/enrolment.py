@@ -22,3 +22,7 @@ class Enrolment(db.Model):
 class EnrolmentSchema(ma.Schema):
     class Meta:
         fields = ('id', 'start_date', 'end_date', 'plant_id')
+
+class NewEnrolmentSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'start_date', 'end_date', 'plant_id', )
