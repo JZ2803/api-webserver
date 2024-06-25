@@ -1,4 +1,4 @@
-from auth import admin_only
+from auth import admin_only_with_id
 from init import db
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required
@@ -46,12 +46,11 @@ def update_customer(id):
     customer.last_name = customer_info.get('last_name', customer.last_name)
     customer.email = customer_info.get('email', customer.email)
     customer.phone_no = customer_info.get('phone_no', customer.phone_no)
-
     db.session.commit()
     return CustomerSchema().dump(customer)
 
 @customers_bp.route("/<int:id>", methods=['DELETE'])
-@jwt_required()
+@admin_only_with_id
 def delete_customer(id):
     """Deletes a customer record from the database."""
     customer = db.get_or_404(Customer, id)

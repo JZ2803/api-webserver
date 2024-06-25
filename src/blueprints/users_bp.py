@@ -1,4 +1,4 @@
-from auth import admin_only, admin_only2
+from auth import admin_only, admin_only_with_id
 from datetime import timedelta
 from flask import Blueprint, request
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
@@ -61,11 +61,10 @@ def update_user(id):
 
         db.session.commit()
         return UserSchema().dump(user)
-
     return {'error': "You don't have permission to update this user"}, 403
 
 @users_bp.route("/<int:id>", methods=['DELETE'])
-@admin_only2
+@admin_only_with_id
 def delete_user(id):
     """Deletes a user record from the database. This can only be performed by an admin."""
     user_to_delete = db.get_or_404(User, id)

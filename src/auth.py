@@ -15,9 +15,9 @@ def admin_only(fn):
     return inner
 
 
-def admin_only2(fn):
+def admin_only_with_id(fn):
     @jwt_required()
-    def inner2(id):
+    def inner_with_id(id):
         user_id = get_jwt_identity()
         stmt = db.select(User).where(User.id == user_id, User.is_admin)
         user = db.session.scalar(stmt)
@@ -25,4 +25,4 @@ def admin_only2(fn):
             return fn(id)
         return {'error': "You must be an admin to access this resource"}, 403
     
-    return inner2
+    return inner_with_id

@@ -1,3 +1,4 @@
+from blueprints.activity_types_bp import activity_types_bp
 from blueprints.cli_bp import db_commands
 from blueprints.customers_bp import customers_bp
 from blueprints.enrolments_bp import enrolments_bp
@@ -11,6 +12,7 @@ app.register_blueprint(users_bp)
 app.register_blueprint(customers_bp)
 app.register_blueprint(plants_bp)
 app.register_blueprint(enrolments_bp)
+app.register_blueprint(activity_types_bp)
 
 print(app.url_map)
 

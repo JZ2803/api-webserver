@@ -19,3 +19,16 @@ def get_plant(id):
     """Returns a list of all enrolments associated with a plant."""
     plant = db.get_or_404(Plant, id)
     return PlantEnrolmentSchema().dump(plant)
+
+@plants_bp.route("/", methods=['POST'])
+@jwt_required()
+def create_plant():
+    """Creates a new plant in the database and returns such record."""
+    plant_info = PlantSchema(only=['specie_id', 'customer_id']).load(request.json, unknown='exclude')
+    plant = Plant(
+        specie_id=plant_info['specie_id'],
+        customer_id=plant_info['customer_id']
+    )
+    db.session.add(plant)
+    db.session.commit()
+    return PlantSchema().dump(plant), 201
