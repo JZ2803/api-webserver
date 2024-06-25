@@ -181,17 +181,17 @@ def db_seed():
     users = [
         User(
             email="flora.wilson@plantdaycare.com",
-            password=bcrypt.generate_password_hash("purpleelephant45").decode('utf8'),
+            password=bcrypt.generate_password_hash("PURPLEeleph@nt45").decode('utf8'),
             is_admin=False
         ),
         User(
             email="daisy.mcdonald@plantdaycare.com",
-            password=bcrypt.generate_password_hash("blueclouds99").decode('utf8'),
+            password=bcrypt.generate_password_hash("!bLuecl0uds99").decode('utf8'),
             is_admin=False
         ),
         User(
             email="basil.ericson@plantdaycare.com",
-            password=bcrypt.generate_password_hash("bentumbrella81").decode('utf8'),
+            password=bcrypt.generate_password_hash("Bentumbrell@81").decode('utf8'),
             is_admin=True
         )
     ]

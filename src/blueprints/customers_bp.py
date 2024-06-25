@@ -25,7 +25,7 @@ def get_customer_plants(id):
 @jwt_required()
 def create_customer():
     """Creates a new customer in the database and returns such record."""
-    customer_info = CustomerSchema(only=['first_name', 'last_name', 'email', 'phone_no']).load(request.json)
+    customer_info = CustomerSchema(only=['first_name', 'last_name', 'email', 'phone_no']).load(request.json, unknown='exclude')
     customer = Customer(
         first_name=customer_info['first_name'],
         last_name=customer_info['last_name'],
@@ -39,9 +39,9 @@ def create_customer():
 @customers_bp.route("/<int:id>", methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_customer(id):
-    """Updates an existing customer record."""
+    """Updates an existing customer's details and returns updated record."""
     customer = db.get_or_404(Customer, id)
-    customer_info = CustomerSchema(only=['first_name', 'last_name', 'email', 'phone_no'], unknown='exclude').load(request.json)
+    customer_info = CustomerSchema(only=['first_name', 'last_name', 'email', 'phone_no']).load(request.json, unknown='exclude')
     customer.first_name = customer_info.get('first_name', customer.first_name)
     customer.last_name = customer_info.get('last_name', customer.last_name)
     customer.email = customer_info.get('email', customer.email)

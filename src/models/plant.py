@@ -10,7 +10,7 @@ class Plant(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     specie_id: Mapped[int] = mapped_column(ForeignKey('species.id'))
-    specie: Mapped['Specie'] = relationship(back_populates='plants') # Note: the word 'species' is both singular and plural
+    specie: Mapped['Specie'] = relationship(back_populates='plants')
 
     customer_id: Mapped[int] = mapped_column(ForeignKey('customers.id'))
     customer: Mapped['Customer'] = relationship(back_populates='plants')
