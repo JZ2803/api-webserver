@@ -1,5 +1,6 @@
 from blueprints.cli_bp import db_commands
 from blueprints.customers_bp import customers_bp
+from blueprints.plants_bp import plants_bp
 from blueprints.users_bp import users_bp
 from init import app
 from marshmallow.exceptions import ValidationError
@@ -7,6 +8,7 @@ from marshmallow.exceptions import ValidationError
 app.register_blueprint(db_commands)
 app.register_blueprint(users_bp)
 app.register_blueprint(customers_bp)
+app.register_blueprint(plants_bp)
 
 print(app.url_map)
 

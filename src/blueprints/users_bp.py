@@ -9,6 +9,7 @@ users_bp = Blueprint('users', __name__, url_prefix="/users")
 
 @users_bp.route("/login", methods=['POST'])
 def login():
+    """Returns an access token for a user."""
     params = UserSchema(only=['email', 'password']).load(request.json, unknown='exclude')
     
     stmt = db.select(User).where(User.email == params['email'])
@@ -23,5 +24,14 @@ def login():
 @users_bp.route("/create", methods=['POST'])
 @admin_only
 def create_user():
+    """Creates a new user in the database and returns such user record."""
     params = UserSchema(only=['email', 'password', 'is_admin']).load(request.json)
-    return params
+    user = User(
+        email=params['email'],
+        password=bcrypt.generate_password_hash(params['password']).decode('utf8'),
+        is_admin=params['is_admin']
+    )
+    db.session.add(user)
+    db.session.commit()
+
+    return UserSchema().dump(user), 201

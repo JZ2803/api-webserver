@@ -2,22 +2,29 @@ from auth import admin_only
 from init import db
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required
-from models.customer import Customer, CustomerSchema
+from models.customer import Customer, CustomerPlantSchema, CustomerSchema
 
 customers_bp = Blueprint('customers', __name__, url_prefix="/customers")
 
 @customers_bp.route("/", methods=['GET'])
 @jwt_required()
-def get_customers():
-    """Returns a list of all customer records in the database."""
+def get_all_customers():
+    """Returns a list of all customer records in the database including their id and contact details."""
     stmt = db.select(Customer)
     customers = db.session.scalars(stmt).all()
     return CustomerSchema(many=True).dump(customers)
 
+@customers_bp.route("/<int:id>", methods=['GET'])
+@jwt_required()
+def get_customer_plants(id):
+    """Returns a list of all the plants belonging to a customer and respective enrolment date(s)."""
+    customer = db.get_or_404(Customer, id)
+    return CustomerPlantSchema().dump(customer)
+
 @customers_bp.route("/", methods=['POST'])
 @jwt_required()
 def create_customer():
-    """Creates a new customer record in the database and returns such record."""
+    """Creates a new customer in the database and returns such record."""
     customer_info = CustomerSchema(only=['first_name', 'last_name', 'email', 'phone_no']).load(request.json)
     customer = Customer(
         first_name=customer_info['first_name'],
@@ -50,4 +57,4 @@ def delete_customer(id):
     customer = db.get_or_404(Customer, id)
     db.session.delete(customer)
     db.session.commit()
-    return {}
+    return {'message': "Deleted successfully"}

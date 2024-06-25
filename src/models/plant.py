@@ -9,8 +9,8 @@ class Plant(db.Model):
 
     id: Mapped[int] = mapped_column(primary_key=True)
 
-    species_id: Mapped[int] = mapped_column(ForeignKey('species.id'))
-    species: Mapped['Species'] = relationship(back_populates='plants') # Note: the word 'species' is both singular and plural
+    specie_id: Mapped[int] = mapped_column(ForeignKey('species.id'))
+    specie: Mapped['Specie'] = relationship(back_populates='plants') # Note: the word 'species' is both singular and plural
 
     customer_id: Mapped[int] = mapped_column(ForeignKey('customers.id'))
     customer: Mapped['Customer'] = relationship(back_populates='plants')
@@ -18,5 +18,14 @@ class Plant(db.Model):
     enrolments: Mapped[List['Enrolment']] = relationship(back_populates='plant', cascade='all, delete')
 
 class PlantSchema(ma.Schema):
+    specie = fields.Nested('SpecieSchema', only=['name'])
     class Meta:
-        fields = ('id', 'species_id', 'customer_id')
+        ordered = True
+        fields = ('id', 'specie', 'customer_id')
+
+class PlantEnrolmentSchema(ma.Schema):
+    enrolments = fields.Nested('EnrolmentSchema', many=True)
+    specie = fields.Nested('SpecieSchema', only=['name', 'specie_type'])
+    class Meta:
+        ordered = True
+        fields = ('specie', 'customer_id', 'enrolments')

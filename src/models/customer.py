@@ -1,4 +1,5 @@
 from init import db, ma
+from marshmallow import fields
 from typing import List
 from sqlalchemy import String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -18,3 +19,9 @@ class CustomerSchema(ma.Schema):
     class Meta:
         ordered = True
         fields = ('id', 'first_name', 'last_name', 'email', 'phone_no')
+
+class CustomerPlantSchema(ma.Schema):
+    plants = fields.Nested('PlantSummarySchema', many=True)
+    class Meta:
+        ordered = True
+        fields = ('first_name', 'last_name', 'plants')

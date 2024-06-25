@@ -7,8 +7,8 @@ from models.comment import Comment
 from models.customer import Customer
 from models.enrolment import Enrolment
 from models.plant import Plant
-from models.species import Species
-from models.species_type import SpeciesType
+from models.specie import Specie
+from models.specie_type import SpecieType
 from models.user import User
 
 db_commands = Blueprint('db', __name__)
@@ -20,46 +20,46 @@ def db_create():
 
 @db_commands.cli.command("seed")
 def db_seed():
-    species_types = [
-        SpeciesType(
+    specie_types = [
+        SpecieType(
             name="Tree"
         ),
-        SpeciesType(
+        SpecieType(
             name="Succulent"
         ),
-        SpeciesType(
+        SpecieType(
             name="Cactus"
         ),
-        SpeciesType(
+        SpecieType(
             name="Foliage plant"
         ),
-        SpeciesType(
+        SpecieType(
             name="Flowering plant"
         )
     ]
-    db.session.add_all(species_types)
+    db.session.add_all(specie_types)
     db.session.commit()
 
     species = [
-        Species(
+        Specie(
             name="Fiddle-leaf fig",
-            species_type=species_types[0]
+            specie_type=specie_types[0]
         ),
-        Species(
+        Specie(
             name="Bear's paw",
-            species_type=species_types[1]
+            specie_type=specie_types[1]
         ),
-        Species(
+        Specie(
             name="Prickly pear",
-            species_type=species_types[2]
+            specie_type=specie_types[2]
         ),
-        Species(
+        Specie(
             name="Devil's ivy",
-            species_type=species_types[3]
+            specie_type=specie_types[3]
         ),
-        Species(
+        Specie(
             name="Peace lily",
-            species_type=species_types[4]
+            specie_type=specie_types[4]
         )
     ]
     db.session.add_all(species)
@@ -107,27 +107,27 @@ def db_seed():
 
     plants = [
         Plant(
-            species=species[0],
+            specie=species[0],
             customer=customers[0]
         ),
         Plant(
-            species=species[0],
+            specie=species[0],
             customer=customers[1]
         ),
         Plant(
-            species=species[1],
+            specie=species[1],
             customer=customers[2]
         ),
         Plant(
-            species=species[2],
+            specie=species[2],
             customer=customers[3]
         ),
         Plant(
-            species=species[3],
+            specie=species[3],
             customer=customers[4]
         ),
         Plant(
-            species=species[4],
+            specie=species[4],
             customer=customers[5]
         )
     ]

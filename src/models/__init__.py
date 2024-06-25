@@ -4,6 +4,6 @@ import models.comment
 import models.customer
 import models.enrolment
 import models.plant
-import models.species
-import models.species_type
+import models.specie
+import models.specie_type
 import models.user

@@ -4,14 +4,14 @@ from marshmallow import fields
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-class SpeciesType(db.Model):
-    __tablename__ = 'species_types'
+class SpecieType(db.Model):
+    __tablename__ = 'specie_types'
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String())
 
-    species: Mapped[List['Species']] = relationship(back_populates='species_type')
+    species: Mapped[List['Specie']] = relationship(back_populates='specie_type')
 
-class SpeciesTypeSchema(ma.Schema):
+class SpecieTypeSchema(ma.Schema):
     class Meta:
         fields = ('id', 'name')

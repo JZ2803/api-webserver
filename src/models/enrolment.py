@@ -15,9 +15,9 @@ class Enrolment(db.Model):
     plant_id: Mapped[int] = mapped_column(ForeignKey('plants.id'))
     plant: Mapped['Plant'] = relationship(back_populates='enrolments')
 
-    activities: Mapped[List['Activity']] = relationship(back_populates='enrolment')
+    activities: Mapped[List['Activity']] = relationship(back_populates='enrolment', cascade='all, delete')
 
-    comments: Mapped[List['Comment']] = relationship(back_populates='enrolment')
+    comments: Mapped[List['Comment']] = relationship(back_populates='enrolment', cascade='all, delete')
 
 class EnrolmentSchema(ma.Schema):
     class Meta:
