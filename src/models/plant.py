@@ -21,7 +21,7 @@ class PlantSchema(ma.Schema):
     specie = fields.Nested('SpecieSchema', only=['name'])
     class Meta:
         ordered = True
-        fields = ('id', 'specie', 'customer_id')
+        fields = ('id', 'specie_id', 'specie', 'customer_id')
 
 class PlantSummarySchema(ma.Schema):
     enrolments = fields.Nested('EnrolmentSchema', many=True, only=['id', 'start_date', 'end_date'])
@@ -36,3 +36,9 @@ class PlantEnrolmentSchema(ma.Schema):
     class Meta:
         ordered = True
         fields = ('specie', 'customer_id', 'enrolments')
+
+class PlantCustomerSchema(ma.Schema):
+    specie = fields.Nested('SpecieSchema', only=['name'])
+    customer = fields.Nested('CustomerSchema')
+    class Meta:
+        fields = ('id', 'specie_id', 'specie', 'customer')

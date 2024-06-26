@@ -28,3 +28,8 @@ class EnrolmentSummarySchema(ma.Schema):
     comments = fields.Nested('CommentSchema', many=True, exclude=['enrolment_id'])
     class Meta:
         fields = ('id', 'start_date', 'end_date', 'plant_id', 'activities', 'comments')
+
+class EnrolmentNewCustomerSchema(ma.Schema):
+    plant = fields.Nested('PlantCustomerSchema', exclude=['specie_id'])
+    class Meta:
+        fields = ('id', 'start_date', 'end_date', 'plant')
