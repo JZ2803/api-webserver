@@ -1,10 +1,9 @@
 from auth import admin_only_with_id
 from init import db
 from flask import Blueprint, request
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.activity import Activity, ActivitySchema
-from models.enrolment import Enrolment, EnrolmentActivitySchema
-from models.plant import Plant
+from models.enrolment import Enrolment
 
 activities_bp = Blueprint('activities', __name__, url_prefix="/activities")
 
@@ -17,7 +16,8 @@ def create_activities(id):
     activity = Activity(
         date_performed=activity_info['date_performed'],
         activity_type_id=activity_info['activity_type_id'],
-        enrolment_id=id
+        enrolment_id=id,
+        user_id=get_jwt_identity()
     )
     db.session.add(activity)
     db.session.commit()

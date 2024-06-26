@@ -241,17 +241,20 @@ def db_seed():
         Activity(
             date_performed=date(2024, 5, 20),
             activity_type=activity_types[3],
-            enrolment=enrolments[1]
+            enrolment=enrolments[1],
+            user=users[1]
         ),
         Activity(
             date_performed=date(2023, 12, 20),
             activity_type=activity_types[0],
-            enrolment=enrolments[3]
+            enrolment=enrolments[3],
+            user=users[0]
         ),
         Activity(
             date_performed=date(2024, 1, 20),
             activity_type=activity_types[1],
-            enrolment=enrolments[4]
+            enrolment=enrolments[4],
+            user=users[1]
         )
     ]
     db.session.add_all(activities)

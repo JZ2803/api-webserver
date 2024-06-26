@@ -14,6 +14,7 @@ class User(db.Model):
     is_admin: Mapped[bool] = mapped_column(Boolean(), server_default='false')
 
     comments: Mapped[List['Comment']] = relationship(back_populates='user', cascade='all, delete')
+    activities: Mapped[List['Activity']] = relationship(back_populates='user', cascade='all, delete')
 
 class UserSchema(ma.Schema):
     email = fields.Email(required=True)

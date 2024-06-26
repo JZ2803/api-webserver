@@ -18,5 +18,6 @@ class Comment(db.Model):
     user: Mapped['User'] = relationship(back_populates='comments')
 
 class CommentSchema(ma.Schema):
+    user = fields.Nested('UserSchema', only=['email'])
     class Meta:
-        fields = ('id', 'text', 'date_created', 'enrolment_id', 'user_id')
+        fields = ('id', 'text', 'date_created', 'enrolment_id', 'user')

@@ -16,8 +16,10 @@ class Activity(db.Model):
     enrolment_id: Mapped[int] = mapped_column(ForeignKey('enrolments.id'))
     enrolment: Mapped['Enrolment'] = relationship(back_populates='activities')
 
+    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+    user: Mapped['User'] = relationship(back_populates='activities')
+
 class ActivitySchema(ma.Schema):
     activity_type = fields.Nested('ActivityTypeSchema', only=['name'])
     class Meta:
-        fields = ('id', 'date_performed', 'activity_type_id', 'activity_type', 'enrolment_id')
-        fields = ('id', 'date_performed', 'activity_type_id', 'activity_type')
+        fields = ('id', 'date_performed', 'activity_type_id', 'activity_type', 'user_id')
