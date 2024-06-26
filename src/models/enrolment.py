@@ -22,3 +22,13 @@ class Enrolment(db.Model):
 class EnrolmentSchema(ma.Schema):
     class Meta:
         fields = ('id', 'start_date', 'end_date', 'plant_id')
+
+class EnrolmentActivitySchema(ma.Schema): # Used in activities_bp
+    activities = fields.Nested('ActivitySchema', many=True, only=['id', 'date_performed', 'activity_type'])
+    class Meta:
+        fields = ('start_date', 'end_date', 'plant_id', 'activities')
+
+class EnrolmentCommentsSchema(ma.Schema): # Used in activities_bp
+    comments = fields.Nested('CommentSchema', many=True, only=['text', 'date_created', 'user_id'])
+    class Meta:
+        fields = ('start_date', 'end_date', 'plant_id', 'activities')

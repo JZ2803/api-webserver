@@ -200,9 +200,21 @@ def db_seed():
 
     comments = [
         Comment(
-            text="Test comment 1",
-            date_created=date.today(),
+            text="Wiped down leaves for pests",
+            date_created=date(2024, 5, 21),
+            enrolment=enrolments[1],
+            user=users[1]
+        ),
+        Comment(
+            text="Getting overgrown, needs trim soon",
+            date_created=date(2023, 12, 20),
             enrolment=enrolments[3],
+            user=users[1]
+        ),
+        Comment(
+            text="Yellowing leaves, may require fertiliser",
+            date_created=date(2023, 10, 10),
+            enrolment=enrolments[0],
             user=users[1]
         )
     ]
@@ -217,6 +229,9 @@ def db_seed():
         ),
         ActivityType(
             name="Prune"
+        ),
+        ActivityType(
+            name="Treat for pests"
         )
     ]
     db.session.add_all(activity_types)
@@ -224,9 +239,19 @@ def db_seed():
 
     activities = [
         Activity(
-            date_performed=date.today(),
-            activity_type=activity_types[1],
+            date_performed=date(2024, 5, 20),
+            activity_type=activity_types[3],
             enrolment=enrolments[1]
+        ),
+        Activity(
+            date_performed=date(2023, 12, 20),
+            activity_type=activity_types[0],
+            enrolment=enrolments[3]
+        ),
+        Activity(
+            date_performed=date(2024, 1, 20),
+            activity_type=activity_types[1],
+            enrolment=enrolments[4]
         )
     ]
     db.session.add_all(activities)

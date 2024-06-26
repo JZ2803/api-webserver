@@ -1,3 +1,4 @@
+from auth import admin_only_with_id
 from init import db
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required
@@ -6,11 +7,15 @@ from models.plant import Plant
 
 enrolments_bp = Blueprint('enrolments', __name__, url_prefix="/enrolments")
 
+## RETURN ALL COMMETNS AND ACTIVITIES ASSOCIATED WITH AN ENROLMENT
+
+## GET ALL CURRENT ENROLMENTS
+
 @enrolments_bp.route("/<int:id>", methods=['POST'])
 @jwt_required()
 def create_enrolment(id):
     """Creates a new enrolment for an existing plant in the database and returns created enrolment record."""
-    plant = db.get_or_404(Plant, id)
+    db.get_or_404(Plant, id)
     enrolment_info = EnrolmentSchema(only=['start_date', 'end_date']).load(request.json, unknown='exclude')
     enrolment = Enrolment(
         start_date=enrolment_info['start_date'],
@@ -33,9 +38,9 @@ def update_enrolment(id):
     return EnrolmentSchema().dump(enrolment)
 
 @enrolments_bp.route("/<int:id>", methods=['DELETE'])
-@jwt_required()
+@admin_only_with_id
 def delete_enrolment(id):
-    """Deletes a customer record from the database."""
+    """Deletes an enrolment record from the database."""
     enrolment = db.get_or_404(Enrolment, id)
     db.session.delete(enrolment)
     db.session.commit()

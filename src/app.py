@@ -1,8 +1,12 @@
 from blueprints.activity_types_bp import activity_types_bp
 from blueprints.cli_bp import db_commands
+from blueprints.activities_bp import activities_bp
+from blueprints.activity_types_bp import activity_types_bp
+from blueprints.comments_bp import comments_bp
 from blueprints.customers_bp import customers_bp
 from blueprints.enrolments_bp import enrolments_bp
 from blueprints.plants_bp import plants_bp
+from blueprints.species_bp import species_bp
 from blueprints.specie_types_bp import specie_types_bp
 from blueprints.users_bp import users_bp
 from init import app
@@ -14,7 +18,10 @@ app.register_blueprint(customers_bp)
 app.register_blueprint(plants_bp)
 app.register_blueprint(enrolments_bp)
 app.register_blueprint(activity_types_bp)
+app.register_blueprint(species_bp)
 app.register_blueprint(specie_types_bp)
+app.register_blueprint(activities_bp)
+app.register_blueprint(comments_bp)
 
 print(app.url_map)
 

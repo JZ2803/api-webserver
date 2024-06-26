@@ -17,5 +17,7 @@ class Activity(db.Model):
     enrolment: Mapped['Enrolment'] = relationship(back_populates='activities')
 
 class ActivitySchema(ma.Schema):
+    activity_type = fields.Nested('ActivityTypeSchema', only=['name'])
     class Meta:
-        fields = ('id', 'date_performed', 'activity_type_id', 'enrolment_id')
+        fields = ('id', 'date_performed', 'activity_type_id', 'activity_type', 'enrolment_id')
+        fields = ('id', 'date_performed', 'activity_type_id', 'activity_type')

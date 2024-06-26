@@ -19,4 +19,4 @@ class Comment(db.Model):
 
 class CommentSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'text', 'user_id', 'enrolment_id')
+        fields = ('id', 'text', 'date_created', 'enrolment_id', 'user_id')
