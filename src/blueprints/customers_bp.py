@@ -9,22 +9,19 @@ customers_bp = Blueprint('customers', __name__, url_prefix="/customers")
 @customers_bp.route("/", methods=['GET'])
 @jwt_required()
 def get_all_customers():
-    """Returns a list of all customer records in the database including their id and contact details."""
-    stmt = db.select(Customer)
-    customers = db.session.scalars(stmt).all()
-    return CustomerSchema(many=True).dump(customers)
+    stmt = db.select(Customer) # Query to select all records from the Customers table
+    customers = db.session.scalars(stmt).all() # Execute query and retrieve the result
+    return CustomerSchema(many=True).dump(customers) # Serialize retrieved records and return JSON object
 
-@customers_bp.route("/<int:id>", methods=['GET'])
+@customers_bp.route("/<id>", methods=['GET'])
 @jwt_required()
 def get_customer_plants(id):
-    """Returns a list of all the plants belonging to a customer and respective enrolment date(s)."""
-    customer = db.get_or_404(Customer, id)
-    return CustomerPlantSchema().dump(customer)
+    customer = db.get_or_404(Customer, id) # Retrieve customer record from database or raise 404 error if customer does not exist
+    return CustomerPlantSchema().dump(customer) # Serialize retrieved records and return JSON object
 
 @customers_bp.route("/", methods=['POST'])
 @jwt_required()
 def create_customer():
-    """Creates a new customer in the database and returns such record."""
     customer_info = CustomerSchema(only=['first_name', 'last_name', 'email', 'phone_no']).load(request.json, unknown='exclude')
     customer = Customer(
         first_name=customer_info['first_name'],
@@ -39,7 +36,6 @@ def create_customer():
 @customers_bp.route("/<int:id>", methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_customer(id):
-    """Updates an existing customer's details and returns updated record."""
     customer = db.get_or_404(Customer, id)
     customer_info = CustomerSchema(only=['first_name', 'last_name', 'email', 'phone_no']).load(request.json, unknown='exclude')
     customer.first_name = customer_info.get('first_name', customer.first_name)
@@ -52,7 +48,6 @@ def update_customer(id):
 @customers_bp.route("/<int:id>", methods=['DELETE'])
 @admin_only_with_id
 def delete_customer(id):
-    """Deletes a customer record from the database."""
     customer = db.get_or_404(Customer, id)
     db.session.delete(customer)
     db.session.commit()

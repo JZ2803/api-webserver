@@ -19,26 +19,20 @@ class Plant(db.Model):
 
 class PlantSchema(ma.Schema):
     specie = fields.Nested('SpecieSchema', only=['name'])
+    
     class Meta:
-        ordered = True
         fields = ('id', 'specie_id', 'specie', 'customer_id')
 
-class PlantSummarySchema(ma.Schema):
-    enrolments = fields.Nested('EnrolmentSchema', many=True, only=['id', 'start_date', 'end_date'])
-    specie = fields.Nested('SpecieSchema', only=['name'])
-    class Meta:
-        ordered = True
-        fields = ('id', 'specie', 'enrolments')
-
 class PlantEnrolmentSchema(ma.Schema):
-    enrolments = fields.Nested('EnrolmentSchema', many=True)
+    enrolments = fields.Nested('EnrolmentSchema', many=True, exclude=['plant_id'])
     specie = fields.Nested('SpecieSchema', only=['name', 'specie_type'])
+    
     class Meta:
-        ordered = True
-        fields = ('specie', 'customer_id', 'enrolments')
+        fields = ('id', 'specie', 'customer_id', 'enrolments')
 
-class PlantCustomerSchema(ma.Schema):
+class PlantCustomerSchema(ma.Schema):  # Used in EnrolmentNewCustomerSchema schema
     specie = fields.Nested('SpecieSchema', only=['name'])
     customer = fields.Nested('CustomerSchema')
+    
     class Meta:
         fields = ('id', 'specie_id', 'specie', 'customer')

@@ -19,5 +19,6 @@ class Comment(db.Model):
 
 class CommentSchema(ma.Schema):
     user = fields.Nested('UserSchema', only=['email'])
+    
     class Meta:
         fields = ('id', 'date_created', 'text','enrolment_id', 'user')

@@ -9,7 +9,7 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(Text())
+    email: Mapped[str] = mapped_column(Text(), unique=True)
     password: Mapped[str] = mapped_column(String())
     is_admin: Mapped[bool] = mapped_column(Boolean(), server_default='false')
 

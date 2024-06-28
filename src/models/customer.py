@@ -17,11 +17,10 @@ class Customer(db.Model):
 
 class CustomerSchema(ma.Schema):
     class Meta:
-        ordered = True
         fields = ('id', 'first_name', 'last_name', 'email', 'phone_no')
 
 class CustomerPlantSchema(ma.Schema):
-    plants = fields.Nested('PlantSummarySchema', many=True)
+    plants = fields.Nested('PlantEnrolmentSchema', many=True, exclude=['customer_id'])
+
     class Meta:
-        ordered = True
         fields = ('first_name', 'last_name', 'plants')

@@ -12,7 +12,6 @@ enrolments_bp = Blueprint('enrolments', __name__, url_prefix="/enrolments")
 @enrolments_bp.route("/new", methods=['POST'])
 @jwt_required()
 def create_enrolment_new():
-    """Creates an enrolment, plant and customer record for a first-time customer and returns the newly created records."""
     customer_info = CustomerSchema(only=['first_name', 'last_name', 'email', 'phone_no']).load(request.json, unknown='exclude')
     customer = Customer(
         first_name=customer_info['first_name'],
@@ -45,28 +44,25 @@ def create_enrolment_new():
 @enrolments_bp.route("/<int:id>", methods=['GET'])
 @jwt_required()
 def get_enrolment_summary(id):
-    """Returns the dates and plant associated with an enrolment and all comments and activities associated with the enrolment."""
     enrolment = db.get_or_404(Enrolment, id)
     return EnrolmentSummarySchema().dump(enrolment)
 
 @enrolments_bp.route("/current", methods=['GET'])
 @jwt_required()
 def get_current_enrolments():
-    """Returns a list of all current enrolments."""
     stmt = db.select(Enrolment).where(Enrolment.end_date > date.today())
-    enrolments = db.session.scalar(stmt)
-    return EnrolmentSchema().dump(enrolments)
+    enrolments = db.session.scalars(stmt).all()
+    return EnrolmentSchema(many=True).dump(enrolments)
 
-@enrolments_bp.route("/<int:id>", methods=['POST'])
+@enrolments_bp.route("/<int:plant_id>", methods=['POST'])
 @jwt_required()
-def create_enrolment(id):
-    """Creates a new enrolment for an existing plant in the database and returns created enrolment record."""
-    db.get_or_404(Plant, id)
+def create_enrolment(plant_id):
+    db.get_or_404(Plant, plant_id)
     enrolment_info = EnrolmentSchema(only=['start_date', 'end_date']).load(request.json, unknown='exclude')
     enrolment = Enrolment(
         start_date=enrolment_info['start_date'],
         end_date=enrolment_info['end_date'],
-        plant_id=id
+        plant_id=plant_id
     )
     db.session.add(enrolment)
     db.session.commit()
@@ -75,7 +71,6 @@ def create_enrolment(id):
 @enrolments_bp.route("/<int:id>", methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_enrolment(id):
-    """Updates an existing enrolment and returns updated enrolment record."""
     enrolment = db.get_or_404(Enrolment, id)
     enrolment_info = EnrolmentSchema(only=['start_date', 'end_date']).load(request.json, unknown='exclude')
     enrolment.start_date = enrolment_info.get('start_date')
@@ -86,7 +81,6 @@ def update_enrolment(id):
 @enrolments_bp.route("/<int:id>", methods=['DELETE'])
 @admin_only_with_id
 def delete_enrolment(id):
-    """Deletes an enrolment record from the database."""
     enrolment = db.get_or_404(Enrolment, id)
     db.session.delete(enrolment)
     db.session.commit()
