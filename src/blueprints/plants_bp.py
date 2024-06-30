@@ -2,7 +2,7 @@ from auth import admin_only_with_id
 from init import db
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required
-from models.plant import Plant, PlantSchema, PlantEnrolmentSchema
+from models.plant import Plant, PlantSchema
 
 plants_bp = Blueprint('plants', __name__, url_prefix="/plants")
 
@@ -17,7 +17,7 @@ def get_all_plants():
 @jwt_required()
 def get_plant(id):
     plant = db.get_or_404(Plant, id)
-    return PlantEnrolmentSchema().dump(plant)
+    return PlantSchema(only=['id', 'specie', 'customer_id', 'enrolments']).dump(plant)
 
 @plants_bp.route("/", methods=['POST'])
 @jwt_required()

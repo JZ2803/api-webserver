@@ -18,21 +18,13 @@ class Plant(db.Model):
     enrolments: Mapped[List['Enrolment']] = relationship(back_populates='plant', cascade='all, delete')
 
 class PlantSchema(ma.Schema):
-    specie = fields.Nested('SpecieSchema', only=['name'])
-    
-    class Meta:
-        fields = ('id', 'specie_id', 'specie', 'customer_id')
-
-class PlantEnrolmentSchema(ma.Schema):
-    enrolments = fields.Nested('EnrolmentSchema', many=True, exclude=['plant_id'])
     specie = fields.Nested('SpecieSchema', only=['name', 'specie_type'])
-    
+    enrolments = fields.Nested('EnrolmentSchema', many=True, exclude=['plant_id'])
     class Meta:
-        fields = ('id', 'specie', 'customer_id', 'enrolments')
+        fields = ('id', 'specie_id', 'specie', 'customer_id', 'enrolments')
 
 class PlantCustomerSchema(ma.Schema):  # Used in EnrolmentNewCustomerSchema schema
     specie = fields.Nested('SpecieSchema', only=['name'])
     customer = fields.Nested('CustomerSchema')
-    
     class Meta:
         fields = ('id', 'specie_id', 'specie', 'customer')

@@ -24,4 +24,4 @@ class ActivitySchema(ma.Schema):
     user = fields.Nested('UserSchema', only=['email'])
     
     class Meta:
-        fields = ('id', 'date_performed', 'activity_type_id', 'activity_type', 'user')
+        fields = ('id', 'date_performed', 'activity_type_id', 'activity_type', 'user_id', 'user')

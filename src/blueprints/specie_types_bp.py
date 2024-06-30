@@ -2,6 +2,7 @@ from auth import admin_only_with_id
 from init import db
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required
+from models.specie import Specie
 from models.specie_type import SpecieType, SpecieTypeSchema
 
 specie_types_bp = Blueprint('specie_types', __name__, url_prefix="/specie_types")
@@ -27,6 +28,12 @@ def create_specie_type():
 @admin_only_with_id
 def delete_specie_type(id):
     specie_type = db.get_or_404(SpecieType, id)
-    db.session.delete(specie_type)
-    db.session.commit()
-    return {'message': "Deleted successfully"}
+
+    stmt = db.select(Specie).where(Specie.specie_type_id == id)
+    specie = db.session.scalar(stmt)
+
+    if not specie:
+        db.session.delete(specie_type)
+        db.session.commit()
+        return {'message': "Deleted successfully"}
+    return {'error': "Cannot delete specie type as there are specie(s) associated with it"}, 400

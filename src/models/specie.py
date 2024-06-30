@@ -13,7 +13,7 @@ class Specie(db.Model):
     specie_type_id: Mapped[int] = mapped_column(ForeignKey('specie_types.id'))
     specie_type: Mapped['SpecieType'] = relationship(back_populates='species')
 
-    plants: Mapped[List['Plant']] = relationship(back_populates='specie', cascade='all, delete')
+    plants: Mapped[List['Plant']] = relationship(back_populates='specie')
 
 class SpecieSchema(ma.Schema):
     specie_type = fields.Nested('SpecieTypeSchema', only=['name'])

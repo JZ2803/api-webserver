@@ -2,6 +2,7 @@ from auth import admin_only_with_id
 from init import db
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required
+from models.activity import Activity
 from models.activity_type import ActivityType, ActivityTypeSchema
 
 activity_types_bp = Blueprint('activity_types', __name__, url_prefix="/activity_types")
@@ -27,6 +28,12 @@ def create_activity_type():
 @admin_only_with_id
 def delete_activity_type(id):
     activity_type = db.get_or_404(ActivityType, id)
-    db.session.delete(activity_type)
-    db.session.commit()
-    return {'message': "Deleted successfully"}
+
+    stmt = db.select(Activity).where(Activity.activity_type_id == id)
+    activity = db.session.scalar(stmt)
+
+    if not activity:
+        db.session.delete(activity_type)
+        db.session.commit()
+        return {'message': "Deleted successfully"}
+    return {'error': "Cannot delete activity type as there are activity(s) associated with it"}, 400

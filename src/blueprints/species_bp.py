@@ -2,6 +2,7 @@ from auth import admin_only_with_id
 from init import db
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required
+from models.plant import Plant
 from models.specie import Specie, SpecieSchema
 from models.specie_type import SpecieType, SpecieTypeSchema
 from models.specie_type import SpecieType
@@ -31,6 +32,12 @@ def create_specie(specie_type_id):
 @admin_only_with_id
 def delete_specie(id):
     specie = db.get_or_404(Specie, id)
-    db.session.delete(specie)
-    db.session.commit()
-    return {'message': "Deleted successfully"}
+
+    stmt = db.select(Plant).where(Plant.specie_id == id)
+    plant = db.session.scalar(stmt)
+
+    if not plant:
+        db.session.delete(specie)
+        db.session.commit()
+        return {'message': "Deleted successfully"}
+    return {'error': "Cannot delete specie as there are plant(s) associated with it"}, 400

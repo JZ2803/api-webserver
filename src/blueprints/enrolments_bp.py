@@ -4,7 +4,7 @@ from init import db
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required
 from models.customer import Customer, CustomerSchema
-from models.enrolment import Enrolment, EnrolmentSchema, EnrolmentNewCustomerSchema, EnrolmentSummarySchema
+from models.enrolment import Enrolment, EnrolmentSchema, EnrolmentNewCustomerSchema
 from models.plant import Plant, PlantSchema
 
 enrolments_bp = Blueprint('enrolments', __name__, url_prefix="/enrolments")
@@ -45,14 +45,14 @@ def create_enrolment_new():
 @jwt_required()
 def get_enrolment_summary(id):
     enrolment = db.get_or_404(Enrolment, id)
-    return EnrolmentSummarySchema().dump(enrolment)
+    return EnrolmentSchema().dump(enrolment)
 
 @enrolments_bp.route("/current", methods=['GET'])
 @jwt_required()
 def get_current_enrolments():
     stmt = db.select(Enrolment).where(Enrolment.end_date > date.today())
     enrolments = db.session.scalars(stmt).all()
-    return EnrolmentSchema(many=True).dump(enrolments)
+    return EnrolmentSchema(many=True, exclude=['activities', 'comments']).dump(enrolments)
 
 @enrolments_bp.route("/<int:plant_id>", methods=['POST'])
 @jwt_required()
@@ -66,7 +66,7 @@ def create_enrolment(plant_id):
     )
     db.session.add(enrolment)
     db.session.commit()
-    return EnrolmentSchema().dump(enrolment), 201
+    return EnrolmentSchema(exclude=['activities', 'comments']).dump(enrolment), 201
 
 @enrolments_bp.route("/<int:id>", methods=['PUT', 'PATCH'])
 @jwt_required()
@@ -76,7 +76,7 @@ def update_enrolment(id):
     enrolment.start_date = enrolment_info.get('start_date')
     enrolment.end_date = enrolment_info.get('end_date')
     db.session.commit()
-    return EnrolmentSchema().dump(enrolment)
+    return EnrolmentSchema(exclude=['activities', 'comments']).dump(enrolment)
 
 @enrolments_bp.route("/<int:id>", methods=['DELETE'])
 @admin_only_with_id

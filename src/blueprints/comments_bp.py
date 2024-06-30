@@ -20,7 +20,7 @@ def create_comment(enrolment_id):
     )
     db.session.add(comment)
     db.session.commit()
-    return CommentSchema().dump(comment), 201
+    return CommentSchema(exclude=['user_id]']).dump(comment), 201
 
 @comments_bp.route("/<int:id>", methods=['DELETE'])
 @admin_only_with_id

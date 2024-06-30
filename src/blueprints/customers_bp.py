@@ -2,7 +2,7 @@ from auth import admin_only_with_id
 from init import db
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required
-from models.customer import Customer, CustomerPlantSchema, CustomerSchema
+from models.customer import Customer, CustomerSchema
 
 customers_bp = Blueprint('customers', __name__, url_prefix="/customers")
 
@@ -17,7 +17,7 @@ def get_all_customers():
 @jwt_required()
 def get_customer_plants(id):
     customer = db.get_or_404(Customer, id) # Retrieve customer record from database or raise 404 error if customer does not exist
-    return CustomerPlantSchema().dump(customer) # Serialize retrieved records and return JSON object
+    return CustomerSchema(only=['first_name', 'last_name', 'plants']).dump(customer) # Serialize retrieved records and return JSON object
 
 @customers_bp.route("/", methods=['POST'])
 @jwt_required()

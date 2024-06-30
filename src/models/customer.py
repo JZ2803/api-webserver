@@ -16,11 +16,12 @@ class Customer(db.Model):
     plants: Mapped[List['Plant']] = relationship(back_populates='customer', cascade='all, delete')
 
 class CustomerSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'first_name', 'last_name', 'email', 'phone_no')
-
-class CustomerPlantSchema(ma.Schema):
     plants = fields.Nested('PlantEnrolmentSchema', many=True, exclude=['customer_id'])
-
     class Meta:
-        fields = ('first_name', 'last_name', 'plants')
+        fields = ('id', 'first_name', 'last_name', 'email', 'phone_no', 'plants')
+
+# class CustomerPlantSchema(ma.Schema):
+#     plants = fields.Nested('PlantEnrolmentSchema', many=True, exclude=['customer_id'])
+
+#     class Meta:
+#         fields = ('first_name', 'last_name', 'plants')

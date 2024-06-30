@@ -10,7 +10,7 @@ class ActivityType(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String())
 
-    activities: Mapped[List['Activity']] = relationship(back_populates='activity_type', cascade='all, delete')
+    activities: Mapped[List['Activity']] = relationship(back_populates='activity_type')
 
 class ActivityTypeSchema(ma.Schema):
     class Meta:

@@ -20,14 +20,16 @@ class Enrolment(db.Model):
     comments: Mapped[List['Comment']] = relationship(back_populates='enrolment', cascade='all, delete')
 
 class EnrolmentSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'start_date', 'end_date', 'plant_id')
-
-class EnrolmentSummarySchema(ma.Schema):
     activities = fields.Nested('ActivitySchema', many=True, exclude=['activity_type_id'])
     comments = fields.Nested('CommentSchema', many=True, exclude=['enrolment_id'])
     class Meta:
         fields = ('id', 'start_date', 'end_date', 'plant_id', 'activities', 'comments')
+
+# class EnrolmentSummarySchema(ma.Schema):
+#     activities = fields.Nested('ActivitySchema', many=True, exclude=['activity_type_id'])
+#     comments = fields.Nested('CommentSchema', many=True, exclude=['enrolment_id'])
+#     class Meta:
+#         fields = ('id', 'start_date', 'end_date', 'plant_id', 'activities', 'comments')
 
 class EnrolmentNewCustomerSchema(ma.Schema):
     plant = fields.Nested('PlantCustomerSchema', exclude=['specie_id'])

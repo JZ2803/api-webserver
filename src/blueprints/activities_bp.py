@@ -20,7 +20,7 @@ def create_activities(enrolment_id):
     )
     db.session.add(activity)
     db.session.commit()
-    return ActivitySchema().dump(activity), 201
+    return ActivitySchema(exclude=['user_id']).dump(activity), 201
 
 @activities_bp.route("/<int:id>", methods=['DELETE'])
 @admin_only_with_id
