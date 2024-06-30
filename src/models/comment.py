@@ -21,6 +21,6 @@ class Comment(db.Model):
 # Define the Comment schema
 class CommentSchema(ma.Schema):
     user = fields.Nested('UserSchema', only=['email'])  # Define the nested schema for 'user' attribute to include only 'email'
- 
+
     class Meta:
         fields = ('id', 'date_created', 'text','enrolment_id', 'user_id', 'user') # Define the fields to include in the schema
