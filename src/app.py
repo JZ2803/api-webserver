@@ -11,6 +11,7 @@ from blueprints.users_bp import users_bp
 from init import app
 from marshmallow.exceptions import ValidationError
 
+# Register all the blueprints with the Flask application
 app.register_blueprint(activities_bp)
 app.register_blueprint(activity_types_bp)
 app.register_blueprint(comments_bp)
@@ -22,29 +23,21 @@ app.register_blueprint(specie_types_bp)
 app.register_blueprint(species_bp)
 app.register_blueprint(users_bp)
 
+# Print the URL map of the Flask application
 print(app.url_map)
 
-@app.route("/")
-def hello_world():
-    return "Hello World"
-
+# Define error handlers for specific HTTP status codes
 @app.errorhandler(405)
 @app.errorhandler(404)
 def not_found(err):
-    """ Handles 405 and 404 errors.
-
-    Parameters:
-        err (Exception): The exception object raised.
-
-    Returns:
-        dict: An error message and HTTP status code 404.
-    """
     return {'error': "Not found"}, 404
 
+# Define error handler for validation errors
 @app.errorhandler(ValidationError)
 def invalid_request(err):
     return {"error": vars(err)["messages"]}, 400
 
+# Define error handler for key errors
 @app.errorhandler(KeyError)
 def missing_key(err):
     return {"error": f"Missing field: {str(err)}"}, 400

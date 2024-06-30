@@ -11,15 +11,19 @@ from models.specie import Specie
 from models.specie_type import SpecieType
 from models.user import User
 
+# Define a Blueprint for database commands
 db_commands = Blueprint('db', __name__)
 
+# Command-line interface command to create the database tables
 @db_commands.cli.command("create")
 def db_create():
     db.create_all()
     print("Created tables")
 
+# Command-line interface command to seed the database with sample data
 @db_commands.cli.command("seed")
 def db_seed():
+    # Define the sample data for specie types
     specie_types = [
         SpecieType(
             name="Tree"
@@ -36,10 +40,11 @@ def db_seed():
         SpecieType(
             name="Flowering plant"
         )
-    ]
+    ]  
     db.session.add_all(specie_types)
     db.session.commit()
 
+    # Define the sample data for species
     species = [
         Specie(
             name="Fiddle-leaf fig",
@@ -64,6 +69,7 @@ def db_seed():
     ]
     db.session.add_all(species)
 
+    # Define the sample data for customers
     customers = [
         Customer(
             first_name="Alice",
@@ -105,6 +111,7 @@ def db_seed():
     db.session.add_all(customers)
     db.session.commit()
 
+    # Define the sample data for plants
     plants = [
         Plant(
             specie=species[0],
@@ -134,6 +141,7 @@ def db_seed():
     db.session.add_all(plants)
     db.session.commit()
 
+    # Define the sample data for enrolments
     enrolments = [
         Enrolment(
             start_date=date(2023, 9, 9),
@@ -178,6 +186,7 @@ def db_seed():
     ]
     db.session.add_all(enrolments)
 
+    # Define the sample data for users
     users = [
         User(
             email="flora.wilson@plantdaycare.com",
@@ -198,6 +207,7 @@ def db_seed():
     db.session.add_all(users)
     db.session.commit()
 
+    # Define the sample data for comments
     comments = [
         Comment(
             text="Wiped down leaves for pests",
@@ -220,6 +230,7 @@ def db_seed():
     ]
     db.session.add_all(comments)
 
+    # Define the sample data for activity types
     activity_types = [
         ActivityType(
             name="Water"
@@ -237,6 +248,7 @@ def db_seed():
     db.session.add_all(activity_types)
     db.session.commit()
 
+    # Define the sample data for activities
     activities = [
         Activity(
             date_performed=date(2024, 5, 20),
@@ -262,6 +274,7 @@ def db_seed():
 
     print("Seeded database")
 
+# Command-line interface command to delete database tables
 @db_commands.cli.command("drop")
 def db_drop():
     db.drop_all()
