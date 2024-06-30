@@ -2,13 +2,23 @@
 
 ## Table of contents
 
-[R1 Explain the problem that this app will solve, and explain how this app solves or addresses the problem](#r1)
+[R1. Explain the problem that this app will solve, and explain how this app solves or addresses the problem](#r1)
 
-[R2. Describe the way tasks are allocated and tracked in your project](#Describe-the-way-tasks-areallocated and tracked in your project)
+[R2. Describe the way tasks are allocated and tracked in your project](#r2)
 
-[R8 Explain how to use this application’s API endpoints](#r8)
+[R3. List and explain the third-party services, packages and dependencies used in this app](#r3)
 
-## R1 Explain the problem that this app will solve, and explain how this app solves or addresses the problem. 
+[R4. Explain the benefits and drawbacks of this app’s underlying database system](#r4)
+	
+[R5. Explain the features, purpose and functionalities of the object-relational mapping system (ORM) used in this app](#r5)
+
+[R6. Design an entity relationship diagram (ERD) for this app’s database, and explain how the relations between the diagrammed models will aid the database design. This should focus on the database design BEFORE coding has begun, eg. during the project planning or design phase.](#r6)
+
+[R7. Explain the implemented models and their relationships, including how the relationships aid the database implementation. This should focus on the database implementation AFTER coding has begun, eg. during the project development phase.](#r7)
+
+[R8. Explain how to use this application’s API endpoints. Each endpoint should be explained, including the following data for each endpoint: HTTP verb, Path or route, Any required body or header data, Response](#r8)
+
+## R1. Explain the problem that this app will solve, and explain how this app solves or addresses the problem. <a id="r1"></a>
 
 This API webserver app is a tracking and management tool for a plant day-care, a small business that provides care for plants during periods where their owners are unable to attend to them, for example, when going on holidays. As with most day-care businesses, there are a number of challenges and complexities involved in managing a plant day-care efficiently:
 
@@ -24,7 +34,7 @@ To address these problems, the app will provide the following functionalities:
 - <u>Comments can be added to enrolment records</u>, allowing for a place to retain remarks about each plant and providing a platform for staff to share noteworthy information with each other. For example, if a staff member has watered a plant today and noticed some signs of a pest infestation, they can leave a comment on its enrolment record saying, “Noticed early signs of pest infestation whilst watering”. This way, all staff members can be informed of and have access to this information as they can simply search up the enrolment record for this plant in the database and the comment will show up.
 - <u>Proper authorisation controls</u>, where only staff with administrator privileges can perform certain tasks such as changing account passwords, or deleting certain records. This ensures that actions can only be performed by authorised personnel.
 
-## R2. Describe the way tasks are allocated and tracked in your project.
+## R2. Describe the way tasks are allocated and tracked in your project. <a id="r2"></a>
 
 ### Trello
 
@@ -59,7 +69,7 @@ Finally, this is followed by finalisation tasks including:
 
 Throughout the duration of the project, a daily assessment was performed at the end of the day to reflect on what tasks were completed and what issues were encountered, similar to a daily stand-up. Taking these things into consideration, due dates and timelines for outstanding tasks can be adjusted or reprioritised as necessary, and tasks for the next day are planned out. This daily tracking and continued evaluation ensures that any issues or roadblocks can be identified and handled efficiently and effectively, and any new opportunities can be identified and explored in a timely manner.
 
-## R3. List and explain the third-party services, packages and dependencies used in this app. 
+## R3. List and explain the third-party services, packages and dependencies used in this app. <a id="r3"></a>
 
 The main third-party services, packages and dependencies used by the app are:
 
@@ -72,7 +82,7 @@ Ultimately, SQLAlchemy and psycopg2 work synergistically to simplify database se
 - <u>Bcrypt</u>: A password hashing function based on the Blowfish cipher. It incorporates salting, which adds additional random data to a password, before hashing it using an adaptive hashing algorithm (Arias, 2021). Bcrpyt has been utilised in the app to hash user passwords before storing them in the database, as well as hashing user input password to check against the hashed password stored in the databased.
 - <u>Python dotenv</u>: allows management of environment variables from an .env file. Environment variables are typically used to store configuration settings, API keys, database credentials and other sensitive information that should not be hard-coded into the source code. In the app, environment variables such as the SQLAlchemy database URI and JWT secret key have been stored in a .env file, separating the configuration from the code which makes changing configurations easier and enhancing security.
 
-## R4. Explain the benefits and drawbacks of this app’s underlying database system.
+## R4. Explain the benefits and drawbacks of this app’s underlying database system. <a id="r4"></a>
 
 This app utilises PostgreSQL for its database system. First developed in the late 1980s, it has since developed into one of the most established relational database management systems (RDBMS) available (Burdiuzha, 2023). As with any database system, it has its advantages and disadvantages, and so it is essential to consider the specific requirements of the project to weigh these against in order to make an informed decision on utilising PostgreSQL as the database system of choice for the app.
 
@@ -88,7 +98,7 @@ On the other hand, some drawbacks are:
 - <u>Speed</u>: As PostgreSQL is meant for complex queries, it is often slower than other database systems when it comes to executing simple queries. When handling large datasets, complicated queries and read-write operations, PostgreSQL is very efficient, however when it comes to simpler read-only commands, there are other databases that are designed for high-volume data operations, such as MySQL, which perform quicker (Shopsense Retail Technologies, 2024).
 - <u>Steep learning curve</u>: With its offering of advanced features and SQL capabilities, PostgreSQL comes with a steep learning curve. In comparison to other database systems such as MySQL, PostgreSQL may involve a more complex infrastructure setup and troubleshooting experience and requires a deep understanding of its architecture, transaction management and performance optimisation procedures to fully master.
 
-## R5. Explain the features, purpose and functionalities of the object-relational mapping system (ORM) used in this app.
+## R5. Explain the features, purpose and functionalities of the object-relational mapping system (ORM) used in this app. <a id="r5"></a>
 
 This app utilises SQLAlchemy for its object-relational mapper (ORM) capabilities. As previously mentioned, an ORM translates between the data representations used by databases and those used in object-oriented programming (Ellingwood, 2024). SQLAlchemy does just this, “simplifying the connection between Python and SQL databases by automatically converting Python class calls into SQL statements, making it possible to query relational databases in a Pythonic way” (DataScientest, 2023).
 
@@ -156,7 +166,7 @@ Some of the features and functionalities of SQLAlchemy ORM include:
     ```
     With the help of a marshmallow schema, the JSON data is loaded from the request body. A new `Plant` object is created with this information. The newly created `Plant` object is then added to the database session and then committed, which saves the changes to the database. A JSON response is returned, containing details of the newly created `Plant` record.
 
-## R6. Design an entity relationship diagram (ERD) for this app’s database, and explain how the relations between the diagrammed models will aid the database design. This should focus on the database design BEFORE coding has begun, e.g. during the project planning or design phase.
+## R6. Design an entity relationship diagram (ERD) for this app’s database, and explain how the relations between the diagrammed models will aid the database design. This should focus on the database design BEFORE coding has begun, e.g. during the project planning or design phase. <a id="r6"></a>
 
 ![Play daycare ERD](/docs/plant-daycare-ERD.png)
 
@@ -261,7 +271,7 @@ Additionally builds on 2NF, by further ensuring that there are no transitive dep
     | 5        | 304        | 107          | 205         |
     | 6        | 305        | 108          | 206         |
 
-## R7. Explain the implemented models and their relationships, including how the relationships aid the database implementation. This should focus on the database implementation AFTER coding has begun, eg. during the project development phase.
+## R7. Explain the implemented models and their relationships, including how the relationships aid the database implementation. This should focus on the database implementation AFTER coding has begun, eg. during the project development phase. <a id="r7"></a>
 
 ### Customer model
 - Maps to a `customers` table in the database
@@ -515,7 +525,7 @@ Additionally builds on 2NF, by further ensuring that there are no transitive dep
     activities: Mapped[List['Activity']] = relationship(back_populates='user', cascade='all, delete')
     ```
 
-## R8 Explain how to use this application’s API endpoints.
+## R8 Explain how to use this application’s API endpoints. Each endpoint should be explained, including the following data for each endpoint: HTTP verb, Path or route, Any required body or header data, Response. <a id="r8"></a>
 
 ### Users
 
