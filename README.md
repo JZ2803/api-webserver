@@ -1,5 +1,7 @@
 # T2A2: API Webserver - Plant Daycare Management
 
+GitHub repository: https://github.com/JZ2803/api-webserver
+
 Code and comments have been written with reference to [PEP 8 – Style Guide](https://peps.python.org/pep-0008/).
 
 ## Table of contents
